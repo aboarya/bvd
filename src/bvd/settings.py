@@ -116,7 +116,7 @@ TEMPLATE_LOADERS = (
 	'django.template.loaders.eggs.Loader',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,11 +126,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'bvd.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -141,8 +139,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     #'django_openid_auth',
     'django.contrib.admin',
-	'bvd.pull',
-	'bvd.jenkins',
+    'bvd.pull',
+    'bvd.jenkins',
     #'south',
     #'django_auth_ldap',
 	
@@ -180,7 +178,7 @@ CI_INSTALLATIONS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django_openid_auth.auth.OpenIDBackend',
+    #'django_openid_auth.auth.OpenIDBackend',
     #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -200,6 +198,6 @@ import os
 PROJECT_ROOT = os.getcwd()
 SECRET_KEY = "12344"
 
-
+ALLOWED_HOSTS = ['*']
 #import dj_database_url
 #DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
