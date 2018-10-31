@@ -26,25 +26,23 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
+from django.urls import path
+from .views import *
 
-from django.conf import settings
-
-urlpatterns = patterns('bvd.pull.views',
+urlpatterns = (
     
-    url(r'^$', 'home',name='home'),
-    url(r'^pull_jobs/$','pull_jobs',name='pull_jobs'),
-	url(r'^validate_hostname/$','validate_hostname',name='validate_hostname'),
-    url(r'^validate_username/$','validate_username',name='validate_username'),
-	url(r'^validate_job/$','validate_job',name='validate_job'),
-	url(r'^retrieve_job/$','retrieve_job',name='retrieve_job'),
-    url(r'^remove_job/$','remove_job',name='remove_job'),
-	url(r'^autocomplete_hostname/$','autocomplete_hostname',name='autocomplete_hostname'),
-    url(r'^save_jobs/$','save_jobs',name='save_jobs'),
-	url(r'^get_modal/$','get_modal',name='get_modal'),
-    url(r'^login/$','login',name='login'),
-    url(r'^logout/$','logout',name='logout'),
-    url(r'^edit_widget/$','edit_widget',name='edit_widget'),
+    path(r'^$', home, name='home'),
+    path(r'^pull_jobs/$', pull_jobs ,name='pull_jobs'),
+	path(r'^validate_hostname/$', validate_hostname ,name='validate_hostname'),
+    path(r'^validate_username/$', validate_username ,name='validate_username'),
+	path(r'^validate_job/$', validate_job ,name='validate_job'),
+	path(r'^retrieve_job/$', retrieve_job ,name='retrieve_job'),
+    path(r'^remove_job/$', remove_job ,name='remove_job'),
+	path(r'^autocomplete_hostname/$', autocomplete_hostname ,name='autocomplete_hostname'),
+    path(r'^save_jobs/$', save_jobs ,name='save_jobs'),
+	path(r'^get_modal/$', get_modal ,name='get_modal'),
+    path(r'^login/$', login ,name='login'),
+    path(r'^logout/$', logout ,name='logout'),
+    path(r'^edit_widget/$', edit_widget ,name='edit_widget'),
 	
 )

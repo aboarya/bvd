@@ -26,12 +26,17 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-import urllib2, StringIO
-from urlparse import urlparse
+from urllib.request import urlopen
+from urllib.request import Request
+import urllib.error as urllib2
+
+from io import StringIO
+#from urlparse import urlparse
+import urllib.parse as urlparse
 from dateutil import parser
 import types
 import xml.etree.ElementTree as et
-import simplejson
+import json as simplejson
 
 class RetrieveJob(object):
     
@@ -49,13 +54,13 @@ class RetrieveJob(object):
                 req.add_header("Authorization", authheader)
                 conn = urllib2.urlopen(req,timeout=5)
             else:
-                conn = urllib2.urlopen(self.hostname,timeout=5)
+                conn = urlopen(self.hostname,timeout=5)
             conn.close()
             return True
         except ValueError:
             return ValueError
-        except urllib2.HTTPError, e:
-            print '>>>>>>>>>>>>>', e.code
+        except urllib2.HTTPError as e:
+            print('>>>>>>>>>>>>>', e.code)
             #check the status code
             if e.code == 403: #requires authentication
                 return 403
@@ -69,14 +74,14 @@ class RetrieveJob(object):
     def lookup_job(self, use_auth=False, username=None, password=None):
         try:
             if use_auth:
-                req = urllib2.Request('%s/job/%s/lastBuild/api/json' % (self.hostname,self.jobname))
+                req = Request('%s/job/%s/lastBuild/api/json' % (self.hostname,self.jobname))
                 import base64
                 base64string = base64.encodestring('%s:%s' % (username, password))[:-1]
                 authheader =  "Basic %s" % base64string
                 req.add_header("Authorization", authheader)
-                conn = urllib2.urlopen(req,timeout=5)
+                conn = urlopen(req,timeout=5)
             else:
-                conn = urllib2.urlopen('%s/job/%s/lastBuild/api/json' % (self.hostname,self.jobname),timeout=5)
+                conn = urlopen('%s/job/%s/lastBuild/api/json' % (self.hostname,self.jobname),timeout=5)
             
             json = simplejson.load(conn)
 
@@ -88,7 +93,7 @@ class RetrieveJob(object):
                 
         except ValueError:
             return ValueError
-        except urllib2.HTTPError, e:
+        except urllib2.HTTPError as e:
             #check the status code
             if e.code == 403: #requires authentication
                 return urllib2.HTTPError

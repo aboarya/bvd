@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 BVD v1.0
 
@@ -26,32 +27,11 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-from __future__ import with_statement
-from setuptools import setup, find_packages
-from distutils.core import setup
-import os
+#!/usr/bin/env python
+import os, sys
 
-def get_requirements(filename='requirements.txt'):
-	with open(os.path.join(os.path.dirname(__file__), filename), 'rU') as f:
-		return f.read().split('\n')
-		
-def autosetup():
-	from setuptools import setup, find_packages
-	return setup(
-			name                    = "bvd",
-			version                 = "1.0",
-			include_package_data    = True,
-			zip_safe                = False,
-			packages                = find_packages('src'),
-			package_dir             = {
-				''                      : 'src',
-				},
-			entry_points    = {
-				'setuptools.file_finders' : 'git=setuptools_git:gitlsfiles'
-				},
-			install_requires = get_requirements()
-		)
-
-if __name__ == '__main__':
-	#run setup
-	autosetup()
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bvd.settings")
+    
+    from django.core.management import execute_from_command_line
+    execute_from_command_line(sys.argv)

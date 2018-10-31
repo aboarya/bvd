@@ -59,13 +59,17 @@ class CiServerForm(forms.ModelForm):
     
     class Meta:
         model = models.CiServer
+        fields = '__all__'
         
 class CiJobForm(forms.ModelForm):
     
     class Meta:
         model = models.CiJob
+        fields = '__all__'
         
 class UserCiJobForm(forms.ModelForm):
     
     class Meta:
         model = models.UserCiJob
+        fields = '__all__'
+

@@ -26,22 +26,23 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
+from django.conf.urls import include, url
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+from bvd.pull.views import redirect_to_home
+
+urlpatterns = (
     
     url(r'^$', include('bvd.pull.urls')),
 	#url(r'^listener/$', include('ci_monitor.listener.urls')),
-	url(r'^js_tests$', direct_to_template, {'template': 'tests.html'}),
+	url(r'^js_tests$', TemplateView.as_view(template_name="test.html")),
 	url(r'^pull/', include('bvd.pull.urls')),
-    url(r'^openid/', include('django_openid_auth.urls')),
-    url(r'^accounts/profile','bvd.pull.views.redirect_to_home'),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/profile',redirect_to_home),
+    url(r'^admin/', admin.site.urls),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -38,7 +38,7 @@ class CiServer(models.Model):
     
 class CiJob(models.Model):
     
-    ci_server = models.ForeignKey('CiServer')
+    ci_server = models.ForeignKey('CiServer', on_delete=models.PROTECT)
     jobname = models.CharField(max_length=100)
     status = models.CharField(max_length=10,null=True,blank=True)
     
@@ -46,8 +46,8 @@ class CiJob(models.Model):
         return self.jobname
     
 class UserCiJob(models.Model):
-    user = models.ForeignKey(User)
-    ci_job = models.ForeignKey('CiJob')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    ci_job = models.ForeignKey('CiJob', on_delete=models.PROTECT)
     displayname = models.CharField(max_length=100)
     icon = models.CharField(max_length=100, null=True, blank=True)
     left = models.CharField(max_length=10,null=True,blank=True)

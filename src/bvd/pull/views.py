@@ -26,11 +26,13 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-import urllib2, types, os
+import urllib.error as urllib2
+import types, os
+import json as simplejson
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils import simplejson
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -108,7 +110,7 @@ def save_user_ci_job(**widget):
         if form.is_valid():
             user_ci_job = form.save()
         else:
-            print form.errors
+            print(form.errors)
     return user_ci_job 
     
 def redirect_to_home(request):
@@ -180,7 +182,7 @@ def validate_username(request):
 @secure_required
 def validate_hostname(request):
     job = RetrieveJob(append_http(request.POST.get('hostname',None)),None)
-    print request.POST.get('username') == 'Username'
+    print(request.POST.get('username') == 'Username')
     test = job.lookup_hostname(request.POST.get('username') != 'Username', request.POST.get('username'), request.POST.get('password1'))
     
     if test == urllib2.URLError:
@@ -380,7 +382,7 @@ def edit_widget(request):
             file = open('%s%s' % (path, request.FILES.get('icon').name,), 'wb')
             file.write(request.FILES.get('icon').read())
             file.close()
-        except Exception, e:
-            print e.message
+        except Exception as e:
+            print(e.message)
             pass
     return pull_jobs(request)
